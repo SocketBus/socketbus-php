@@ -1,0 +1,13 @@
+{
+    "name": "socketbus/socketbus-php",
+    "description": "",
+    "authors": [
+        {
+            "name": "Valter Lorran",
+            "email": "valterlorran@hotmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+    }
+}
