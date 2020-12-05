@@ -1,6 +1,6 @@
 <?php
 
-namespace ValterLorran\SocketBus\States;
+namespace SocketBus\States;
 
 use Illuminate\Database\Eloquent\Builder;
 

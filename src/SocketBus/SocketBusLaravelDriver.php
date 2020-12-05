@@ -1,15 +1,18 @@
 <?php
 
-namespace ValterLorran\SocketBus;
+namespace SocketBus;
 
 use Illuminate\Broadcasting\Broadcasters\Broadcaster;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Illuminate\Support\Str;
-use ValterLorran\SocketBus\States\StateModelParser;
+use SocketBus\States\StateModelParser;
 use Illuminate\Database\Eloquent\Builder;
 
 class SocketBusLaravelDriver extends Broadcaster
 {
+    /**
+     * @var SocketBus
+     */
     protected $socketbus;
 
     public function __construct($settings)

@@ -1,10 +1,10 @@
 <?php
 
-namespace ValterLorran\SocketBus\States\Events;
+namespace SocketBus\States\Events;
 
-use ValterLorran\SocketBus\Curl;
+use SocketBus\SocketBus\Curl;
 use Illuminate\Database\Eloquent\Model;
-use ValterLorran\SocketBus\States\DataYetModel;
+use SocketBus\States\DataYetModel;
 
 class BaseListener {
     public $curl;

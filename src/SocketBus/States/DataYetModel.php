@@ -1,8 +1,8 @@
 <?php
 
-namespace ValterLorran\SocketBus\States;
+namespace SocketBus\States;
 use Illuminate\Database\Eloquent\Model;
-use ValterLorran\SocketBus\States\Events\ { CreatedEvent, DeletedEvent, UpdatedEvent};
+use SocketBus\States\Events\ { CreatedEvent, DeletedEvent, UpdatedEvent};
 
 class DataYetModel extends Model {
     protected $dispatchesEvents = [

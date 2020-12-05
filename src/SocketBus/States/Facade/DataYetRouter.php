@@ -1,6 +1,6 @@
 <?php
 
-namespace ValterLorran\SocketBus\States\Facade;
+namespace SocketBus\States\Facade;
 
 use Illuminate\Support\Facades\Facade;
 

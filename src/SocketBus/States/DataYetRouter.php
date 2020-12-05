@@ -1,5 +1,5 @@
 <?php
-namespace ValterLorran\SocketBus\States;
+namespace SocketBus\States;
 use Illuminate\Broadcasting\Broadcasters\Broadcaster;
 use Illuminate\Database\Query\Builder;
 

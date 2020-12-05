@@ -1,6 +1,6 @@
 <?php
 
-namespace ValterLorran\SocketBus\States\Events;
+namespace SocketBus\States\Events;
 
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Database\Eloquent\Model;

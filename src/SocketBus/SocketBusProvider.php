@@ -1,13 +1,13 @@
 <?php
 
-namespace ValterLorran\SocketBus;
+namespace SocketBus;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Broadcasting\BroadcastManager;
 use Illuminate\Support\Facades\Event;
-use ValterLorran\SocketBus\States\Events\CreatedEvent;
-use ValterLorran\SocketBus\States\Events\CreatedListener;
-use ValterLorran\SocketBus\States\DataYetRouter;
+use SocketBus\States\Events\CreatedEvent;
+use SocketBus\States\Events\CreatedListener;
+use SocketBus\States\DataYetRouter;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class SocketBusProvider extends ServiceProvider

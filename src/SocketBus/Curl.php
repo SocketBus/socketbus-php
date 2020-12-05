@@ -1,6 +1,6 @@
 <?php
 
-namespace ValterLorran\SocketBus;
+namespace SocketBus;
 
 class Curl {
     private $domain;
