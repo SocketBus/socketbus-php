@@ -78,3 +78,6 @@ $sockebus->broadcast('food-observer', 'new-food', $payload);
 
 ## Resources
 [API Docs](https://socketbus.com/docs) - Check-out the full documentation
+
+## Related Projects
+[SocketBus Laravel Library](https://github.com/SocketBus/socketbus-laravel) - Laravel library
