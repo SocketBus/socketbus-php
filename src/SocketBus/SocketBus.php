@@ -155,15 +155,32 @@ class SocketBus
         return substr(hash('sha256', $str), 0, 32);
     }
 
+    private function generateE2EIV(string $channelName) {
+        $str = "{$this->customEncryptionKey}:{$this->secretKey}:$channelName";
+        return substr(hash('sha256', $str), 0, 16);
+    }
+
     private function encryptData(array $data, string $channelName)
     {
         if (!$this->customEncryptionKey) {
             return $data;
         }
 
-        $json = json_encode($data);
+        $passphrase = $this->generateE2EPassword($channelName);
 
-        return openssl_encrypt($json, "AES-256-ECB", $this->generateE2EPassword($channelName), 0);
+
+        $salt = openssl_random_pseudo_bytes(8);
+        $salted = '';
+        $dx = '';
+        while (strlen($salted) < 48) {
+            $dx = md5($dx . $passphrase . $salt, true);
+            $salted .= $dx;
+        }
+        $key = substr($salted, 0, 32);
+        $iv = substr($salted, 32, 16);
+        $encrypted_data = openssl_encrypt(json_encode($data), 'aes-256-cbc', $key, true, $iv);
+        $data = ["ct" => base64_encode($encrypted_data), "iv" => bin2hex($iv), "s" => bin2hex($salt)];
+        return json_encode($data);
     }
 
     public function broadcast(array $channels, string $eventName, array $data = [])
