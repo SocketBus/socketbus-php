@@ -19,12 +19,5 @@
     },
     "require-dev": {
         "orchestra/testbench": "^3.8"
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "SocketBus\\SocketBusProvider"
-            ]
-        }
     }
 }
