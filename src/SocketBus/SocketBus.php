@@ -168,7 +168,6 @@ class SocketBus
 
         $passphrase = $this->generateE2EPassword($channelName);
 
-
         $salt = openssl_random_pseudo_bytes(8);
         $salted = '';
         $dx = '';
