@@ -5,8 +5,6 @@ namespace SocketBus;
 use Illuminate\Broadcasting\Broadcasters\Broadcaster;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Illuminate\Support\Str;
-use SocketBus\States\StateModelParser;
-use Illuminate\Database\Eloquent\Builder;
 
 class SocketBusLaravelDriver extends Broadcaster
 {
@@ -17,15 +15,12 @@ class SocketBusLaravelDriver extends Broadcaster
 
     public function __construct($settings)
     {
-        $settings['state_base_class'] = Builder::class;
-        $settings['state_model_parser'] = StateModelParser::class;
-
         $this->socketBus = new SocketBus($settings);
     }
 
     private function isPrivate(string $channelName)
     {
-        if (strpos($channelName, 'private-') === 0 || strpos($channelName, 'presence-') === 0 || strpos($channelName, 'state-') === 0) {
+        if (strpos($channelName, 'private-') === 0 || strpos($channelName, 'presence-') === 0) {
             return true;
         } else if (strpos($channelName, 'public-') === 0) {
             return false;
@@ -34,7 +29,7 @@ class SocketBusLaravelDriver extends Broadcaster
 
     private function normalizeChannel(string $channelName)
     {
-        return str_replace(['private-', 'presence-', 'public-', 'state-'], '', $channelName);
+        return str_replace(['private-', 'presence-', 'public-'], '', $channelName);
     }
 
     private function verifyCanAccessPublicChannel($request, string $channelName)
@@ -93,7 +88,7 @@ class SocketBusLaravelDriver extends Broadcaster
      */
     public function validAuthenticationResponse($request, $result)
     {
-        if (Str::startsWith($request->channel_name, 'private-') || Str::startsWith($request->channel_name, 'public-') || Str::startsWith($request->channel_name, 'state-')) {
+        if (Str::startsWith($request->channel_name, 'private-') || Str::startsWith($request->channel_name, 'public-')) {
             return $this->socketBus->auth(
                 $request->socket_id, 
                 $request->channel_name,
