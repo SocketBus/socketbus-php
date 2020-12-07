@@ -2,6 +2,8 @@
 
 namespace SocketBus;
 
+use GuzzleHttp\Client;
+
 class SocketBus
 {
     /**
@@ -20,23 +22,46 @@ class SocketBus
     private $customEncryptionKey;
 
     /**
-     * @var Curl Contains a curl instance
+     * @var string Contains the custom encryption key for end-to-end encryption
      */
-    private $curl;
+    private $customDomain;
+
+    const DEFAULT_DOMAIN = 'https://app.socketbus.com';
+
+    /**
+     * @var Client
+     */
+    private $guzzleClient;
 
     /**
      * Constructor store the keys and instanciate Curl
      * @throws \Exception
      */
-    public function __construct($options)
+    public function __construct(array $options)
     {
         $this->validateOptions($options);
 
         $this->publicKey = $options['app_id'];
         $this->secretKey = $options['secret'];
+        $this->customDomain = isset($options['customDomain']) ? $options['customDomain'] : DEFAULT_DOMAIN;
         $this->customEncryptionKey = isset($options['custom_encryption_key']) ? $options['custom_encryption_key'] : null;
 
-        $this->curl = new Curl($options);
+        $this->buildClient();
+    }
+
+    private function buildClient()
+    {
+        $authorization = hash("sha256", "{$this->publicKey}:{$this->secretKey}");
+
+        $authorization = "{$this->publicKey}:$authorization";
+
+        $this->guzzleClient = new Client([
+            'base_uri' => $this->customDomain,
+            'timeout' => 30,
+            'headers' => [
+                'Authorization' => $authorization
+            ]
+        ]);
     }
 
     /**
@@ -154,9 +179,11 @@ class SocketBus
     public function broadcast(array $channels, string $eventName, array $data = [])
     {
         foreach($channels as $channel) {
-            $this->curl->post("/channels/$channel/broadcast", [
-                'event' => $eventName,
-                'data' => $this->encryptData($data, $channel)
+            $this->guzzleClient->post("/api/channels/$channel/broadcast", [
+                'json' => [
+                    'event' => $eventName,
+                    'data' => $this->encryptData($data, $channel)
+                ]
             ]);
         }
         return true;
