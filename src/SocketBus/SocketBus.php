@@ -3,6 +3,7 @@
 namespace SocketBus;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class SocketBus
 {
@@ -187,5 +188,54 @@ class SocketBus
             ]);
         }
         return true;
+    }
+
+    private function get($url)
+    {
+        try {
+            $response = $this->guzzleClient->get($url);
+            return json_decode($response->getBody());
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+
+            }
+        }
+    }
+
+    /**
+     * Gets the status of the application
+     * 
+     */
+    public function getStatus()
+    {
+        return $this->get("/api/status");
+    }
+
+    /**
+     * Lists all the channels
+     * 
+     */
+    public function getChannels()
+    {
+        return $this->get("/api/channels");
+    }
+
+    /**
+     * Gets the total users in a channel
+     * 
+     */
+    public function getCountUsersInChannel(string $channelName)
+    {
+        return $this->get("/api/channels/{$channelName}");
+    }
+
+
+    /**
+     * Get all users information in a given channel
+     * 
+     */
+    public function getChannelUsers(string $channelName)
+    {
+        return $this->get("/api/channels/{$channelName}/users");
     }
 }
