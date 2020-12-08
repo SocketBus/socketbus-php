@@ -177,8 +177,12 @@ class SocketBus
         return json_encode($data);
     }
 
-    public function broadcast(array $channels, string $eventName, array $data = [])
+    public function broadcast($channels, string $eventName, array $data = [])
     {
+        if (!is_string($channels)) {
+            $channels = [$channels];
+        }
+        
         foreach($channels as $channel) {
             $this->guzzleClient->post("/api/channels/$channel/broadcast", [
                 'json' => [
@@ -237,5 +241,11 @@ class SocketBus
     public function getChannelUsers(string $channelName)
     {
         return $this->get("/api/channels/{$channelName}/users");
+    }
+
+    public function authWebhook(string $authorization)
+    {
+        $hash = hash("sha256", "webhook:{$this->publicKey}:{$this->secretKey}");
+        return $authorization === $hash;
     }
 }
