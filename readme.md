@@ -60,7 +60,7 @@ $userId = /** gets the current user id */;
 
 if (/** verifies if user can access the request channel */) {
     // returns the data
-    return $socketbus->authPresence($socketId, $channelName, $userId);
+    return $socketbus->authPresence($socketId, $channelName, $userId, true);
 }
 ```
 
