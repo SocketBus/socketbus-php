@@ -179,10 +179,10 @@ class SocketBus
 
     public function broadcast($channels, string $eventName, array $data = [])
     {
-        if (!is_string($channels)) {
+        if (is_string($channels)) {
             $channels = [$channels];
         }
-        
+
         foreach($channels as $channel) {
             $this->guzzleClient->post("/api/channels/$channel/broadcast", [
                 'json' => [
