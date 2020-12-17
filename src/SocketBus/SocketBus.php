@@ -112,9 +112,7 @@ class SocketBus
      */
     public function authPresence(string $socketId, string $channelName, $userId, $result)
     {
-        $encryption = $this->encrypt([
-            'user_id' => $userId
-        ]);
+        $encryption = $this->encrypt($this->encryptData($result, $channelName));
 
         return $this->parseResult([
             'auth' => $this->generateHash($socketId, $channelName),
