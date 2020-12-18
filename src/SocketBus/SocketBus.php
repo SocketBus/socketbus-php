@@ -131,7 +131,7 @@ class SocketBus
         return openssl_decrypt(base64_decode($str), $encrypt_method, $key, 0, $iv);
     }
 
-    private function encrypt(array $data)
+    private function encrypt($data)
     {
         $json = json_encode($data);
 
@@ -175,7 +175,7 @@ class SocketBus
         return json_encode($data);
     }
 
-    public function broadcast($channels, string $eventName, array $data = [])
+    public function broadcast($channels, string $eventName, array $data = [], array $options = [])
     {
         if (is_string($channels)) {
             $channels = [$channels];
@@ -185,7 +185,8 @@ class SocketBus
             $this->guzzleClient->post("/api/channels/$channel/broadcast", [
                 'json' => [
                     'event' => $eventName,
-                    'data' => $this->encryptData($data, $channel)
+                    'data' => $this->encryptData($data, $channel),
+                    'i' => isset($options['i']) ? $options['i'] : null
                 ]
             ]);
         }
