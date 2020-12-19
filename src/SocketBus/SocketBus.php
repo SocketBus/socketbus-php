@@ -247,4 +247,36 @@ class SocketBus
         $hash = hash("sha256", "webhook:{$this->publicKey}:{$this->secretKey}");
         return $authorization === $hash;
     }
+
+    private function checkChannelName(string $shouldMatch, $channelName): bool {
+        return strpos($channelName, $shouldMatch.'-') === 0;
+    }
+
+
+    /**
+     * Checks if the channel is private
+     * 
+     * @param $channelName string
+     */
+    public function isChannelPrivate(string $channelName): bool {
+        return $this->checkChannelName('private', $channelName);
+    }
+
+    /**
+     * Checks if the channel is presence
+     * 
+     * @param $channelName string
+     */
+    public function isChannelPresence(string $channelName): bool {
+        return $this->checkChannelName('presence', $channelName);
+    }
+
+    /**
+     * Checks if the channel is public
+     * 
+     * @param $channelName string
+     */
+    public function isChannelPublic(string $channelName): bool {
+        return $this->checkChannelName('public', $channelName);
+    }
 }
