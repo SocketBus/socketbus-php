@@ -38,6 +38,24 @@ $config = [
 
 ## Authentication
 
+##### Defining the channel type
+
+```php
+$channelName = $request->channel_name;
+
+if ($socketBus->isChannelPrivate($channelName)) {
+    // The channel is private
+}
+if ($socketBus->isChannelPresence($channelName)) {
+    // The channel is presence
+}
+if ($socketBus->isChannelPublic($channelName)) {
+    // The channel is public
+}
+```
+
+##### Private Authentication
+
 ```php
 $socketId = $request->socket_id;
 $channelName = $request->channel_name;
@@ -51,7 +69,7 @@ if (/** verifies if user can access the request channel */) {
 
 ```
 
-###### Presence Authentication
+##### Presence Authentication
 
 ```php
 $socketId = $request->socket_id;
