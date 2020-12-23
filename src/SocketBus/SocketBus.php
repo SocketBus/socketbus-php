@@ -27,8 +27,6 @@ class SocketBus
      */
     private $customDomain;
 
-    const DEFAULT_DOMAIN = 'https://app.socketbus.com';
-
     /**
      * @var Client
      */
@@ -44,7 +42,7 @@ class SocketBus
 
         $this->publicKey = $options['app_id'];
         $this->secretKey = $options['secret'];
-        $this->customDomain = isset($options['customDomain']) ? $options['customDomain'] : DEFAULT_DOMAIN;
+        $this->customDomain = isset($options['customDomain']) ? $options['customDomain'] : 'https://app.socketbus.com';
         $this->customEncryptionKey = isset($options['custom_encryption_key']) ? $options['custom_encryption_key'] : null;
 
         $this->buildClient();
