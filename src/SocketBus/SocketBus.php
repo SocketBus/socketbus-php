@@ -103,6 +103,12 @@ class SocketBus
      */
     public function auth(string $socketId, string $channelName, $result = true)
     {
+        if (!$result) {
+            return [
+                'status' => 'noauth'
+            ];
+        }
+
         return $this->parseResult([
             'auth' => $this->generateHash($socketId, $channelName)
         ], $result, $channelName);
@@ -113,6 +119,12 @@ class SocketBus
      */
     public function authPresence(string $socketId, string $channelName, $userId, $result)
     {
+        if (!$result) {
+            return [
+                'status' => 'noauth'
+            ];
+        }
+
         $encryption = $this->encrypt($this->encryptData($result, $channelName));
 
         return $this->parseResult([
